@@ -76,6 +76,7 @@ def knn_fit(X_train_data, Y_train_labels, initial_k=3):
           k_indices = np.argsort(distances)[:temp_k]
           k_nearest_labels = [Y_train_labels[i] for i in k_indices]
           # Creates a set to rid duplicates and uses max the count the occurances for each element in the set
+          # In case of a tie it selects the nearest neighbor
           most_common = max(set(k_nearest_labels), key=k_nearest_labels.count)
           predictions.append(most_common)
         return predictions  # Returning the predicted labels for the test data
@@ -92,7 +93,6 @@ for k in range(1, 30):
     # Use the previously fitted KNN model to predict labels for validation data
     predictions_val = predict(val_data)
     predictions_days = predict(days_data)
-
 
     # Compare predicted labels with actual labels
     correct_predictions = sum(1 for true_label, predicted_label in zip(val_labels, predictions_val) if true_label == predicted_label)
