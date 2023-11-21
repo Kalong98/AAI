@@ -78,7 +78,7 @@ def kmeans(X_train_data, K_centroids):
 
 ## Option 2: uncomment for no normalization (more accurate)
 wcss_values = []
-k_values = range(2, 8)
+k_values = range(1, 8)
 # Apply K-means clustering
 for k in k_values:
     init_centroids = initialize_centers(train_data, k)
