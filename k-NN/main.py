@@ -69,14 +69,13 @@ def knn_fit(X_train_data, Y_train_labels, initial_k=3):
 
         predictions = []
         for x_test_feature in X_test_data_normalized:
-          temp_k = initial_k # Initialize k with the initial value, will be used to resolve ties further
           # Calculates the euclidean distance of the test feature to all the points in training data
           distances = [np.linalg.norm(x_train_feature - x_test_feature) for x_train_feature in X_train_data_normalized]
           # Sorts the indexes in ascending distance order and add the labels of the first temp_k-indexes to k_nearest_labels
-          k_indices = np.argsort(distances)[:temp_k]
+          k_indices = np.argsort(distances)[:initial_k]
           k_nearest_labels = [Y_train_labels[i] for i in k_indices]
           # Creates a set to rid duplicates and uses max the count the occurances for each element in the set
-          # In case of a tie it selects the nearest neighbor
+          # In case of a tie it selects the nearest neighbor (tried decreasing K in case of tie, but led to more inaccuracy)
           most_common = max(set(k_nearest_labels), key=k_nearest_labels.count)
           predictions.append(most_common)
         return predictions  # Returning the predicted labels for the test data
@@ -109,6 +108,3 @@ for k in range(1, 30):
     print(f'Accuracy on validation data: {accuracy:.2f}%')
     print()
 print(f'Highest accuracy: {highest_acc:.2f}%, with k: {highest_acc_k}')
-    
-
-
