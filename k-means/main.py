@@ -48,14 +48,12 @@ def kmeans(X_train_data, K_centroids):
         distances = [np.linalg.norm(center - x_train_feature) for center in K_centroids]
         cluster_assignments.append(np.argmin(distances))
 
-    cluster_assignments = np.array(cluster_assignments)  # Convert clusters list to NumPy array
-    
+    cluster_assignments = np.array(cluster_assignments)
     
     for i, center in enumerate(K_centroids):
         cluster_points = X_train_data[cluster_assignments == i]
         wcss += np.sum((cluster_points - center) ** 2)
 
-    # Update cluster centers
     new_centers = np.array([X_train_data[cluster_assignments == center].mean(axis=0) for center in range(len(K_centroids))])
     
     return new_centers, cluster_assignments, wcss
@@ -97,18 +95,18 @@ for cluster_idx in range(len(cluster_centers)):
     most_common_label = max(set(cluster_actual_labels), key=cluster_actual_labels.count)
     cluster_labels[cluster_idx] = most_common_label
 
-# Calculate accuracy based on cluster labels and true labels
-correct_predictions = sum(1 for idx, true_label in enumerate(train_labels) if cluster_labels[cluster_assignments[idx]] == true_label)
-total_samples = len(train_labels)
-accuracy = (correct_predictions / total_samples) * 100
+# Calculate accuracy based on cluster labels and actual labels
+# correct_predictions = sum(1 for idx, true_label in enumerate(train_labels) if cluster_labels[cluster_assignments[idx]] == true_label)
+# total_samples = len(train_labels)
+# accuracy = (correct_predictions / total_samples) * 100
 
-print("Cluster centers:")
-print(cluster_centers)
-for cluster_idx, label in cluster_labels.items():
-    print(f"Cluster {cluster_idx} corresponds to {label}")
-print("\nCluster assignments:")
-print(cluster_assignments)
-print(f"Accuracy of K-means clustering on training data: {accuracy:.2f}%")
+# print("Cluster centers:")
+# print(cluster_centers)
+# for cluster_idx, label in cluster_labels.items():
+#     print(f"Cluster {cluster_idx} corresponds to {label}")
+# print("\nCluster assignments:")
+# print(cluster_assignments)
+# print(f"Accuracy of K-means clustering on training data: {accuracy:.2f}%")
 
 plt.figure(figsize=(8, 5))
 plt.plot(k_values, wcss_values, marker='o', linestyle='-', color='b')
