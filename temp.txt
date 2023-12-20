@@ -1,0 +1,7 @@
+            # # eigen layers heeft een nauwkeurigheid van 79,0% na 60 epochs getraind met batch size van 4800 duurde dit 5 minuten
+            # layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
+            # layers.MaxPooling2D(pool_size=(2, 2)),
+            # layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
+            # layers.Flatten(),
+            # layers.Dropout(.1),
+            # layers.Dense(units=num_classes, activation='sigmoid')
