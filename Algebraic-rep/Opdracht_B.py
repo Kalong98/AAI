@@ -88,14 +88,17 @@ def buildMyModel(inputShape):
             keras.Input(shape=inputShape),
             
             # # voeg hier je layers toe.
-            # # eigen layers heeft een nauwkeurigheid van 79,0% na 60 epochs getraind met batch size van 4800 duurde dit 5 minuten
+            # # eigen layers heeft een nauwkeurigheid van 79,0% na 60 epochs getraind, met batch size van 4800 duurde dit 5 minuten
             # layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
             # layers.MaxPooling2D(pool_size=(2, 2)),
             # layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
             # layers.Flatten(),
             # layers.Dropout(.1),
             # layers.Dense(units=num_classes, activation='sigmoid')
-
+            # # Spoiler B heeft een nauwkeurigheid van 98,3% na 60 epochs getraind, met batch size 2048 duurde dit 5 minuten
+            # ten eerst is de kernel size van 3 x 3 goed omdat de image zelf 28 x 28. Als de kernzel size te 
+            # groot is dan wordt het moelijker om distinct features te ontdekken in de image.
+            # ook door max pooling te gebruiken wordt de features die aanwezig zijn extra ge-highlighted
             layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
             layers.MaxPooling2D(pool_size=(2, 2)),
             layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
@@ -116,12 +119,52 @@ Opdracht B2:
 Kopieer bovenstaande model summary en verklaar bij 
 bovenstaande model summary bij elke laag met kleine berekeningen 
 de Output Shape
-"""
 
-"""
 Opdracht B3: 
     
 Verklaar nu bij elke laag met kleine berekeningen het aantal parameters.
+"""
+"""
+Layer (type)                Output Shape              Param #
+=================================================================
+conv2d (Conv2D)             (None, 28, 28, 20)        200
+
+# shape is te verklaren aan de wijdte en hoogte van de image 28 x 28 en de 20 staat voor de 20
+# verschillende feature maps die door de conv2d zijn gemaakt
+# Parameters zijn te verklaren aan (input_channels * kernel_height * kernel_width * output_channels)
+# + output_channels_bias = (1 * 3 * 3 * 20) + 20 = 200
+
+max_pooling2d (MaxPooling2  (None, 14, 14, 20)        0
+D)
+
+# Wat max pooling doet is van poolsize 2 x 2 de grootste pakken en dus het origineel te comprimeren 
+# tot 1 pixel met de meeste "kenmerk"
+
+conv2d_1 (Conv2D)           (None, 14, 14, 20)        3620
+
+# conv2d pas de shape van de image niet aan dus die behoud de 14 x 14 van de vorige layer
+# voor de parameters is het nu (input_channels * kernel_height * kernel_width * output_channels) 
+# + output_channels_bias = (20 * 3 * 3 * 20) + 20 = 3620. De input is nu veranderd naar 20 omdat de
+# eerste conv layer 20 verschillende feature maps als input aanbied.
+
+max_pooling2d_1 (MaxPoolin  (None, 7, 7, 20)          0
+g2D)
+
+# Zelfde als bij de vorige pool dit keer maak het de image nog kleiner.
+
+flatten (Flatten)           (None, 980)               0
+
+# flatten maakt van de 2D array een 1D array dus 7 x 7 = 49 dan vermenigvuldigen met 20 feature maps
+# is totaal 980 als shape
+
+dropout (Dropout)           (None, 980)               0
+
+# dropout voegt zelf niks toe dus blijft gelijk aan vorige layer
+
+dense (Dense)               (None, 10)                9810
+
+# De laatste dense layer heeft 10 neuronen dus 10 * 980 van de vorige layer + 10 bias voor elke neuron
+# komt op 9810
 """
 
 """
