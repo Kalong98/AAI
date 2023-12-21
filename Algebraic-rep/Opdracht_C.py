@@ -137,8 +137,8 @@ conv2d (Conv2D)             (None, 28, 28, 20)        200
 max_pooling2d (MaxPooling2D  (None, 14, 14, 20)       0
  )
 
-# na pooling wat dus van een 2 x 2 de hoogste waarde pakt en de 2 x 2 met deze pixel vervangt
-# de image wordt dan 2 keer zo klein dus 28 x 28 -> 14 x 14
+# Pooling wat dus van een matrix in dit geval 2 x 2 de hoogste waarde pakt en de 2 x 2 met deze waarde vervangt zorgt ervoor dat de image kleiner wordt
+# de image wordt in dit geval 2 keer zo klein dus 28 x 28 -> 14 x 14.
 
 conv2d_1 (Conv2D)           (None, 14, 14, 20)        3620
 
