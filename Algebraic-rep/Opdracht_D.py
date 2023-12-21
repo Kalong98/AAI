@@ -5,7 +5,7 @@ de posities van handgeschreven cijfers in een plaatje te localiseren.
 """
 import numpy as np
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers
 import matplotlib.pyplot as plt
 from matplotlib import pyplot
 import matplotlib
@@ -107,6 +107,13 @@ def buildMyModel(inputShape):
     model = keras.Sequential(
         [
             # Kopieer hier je model uit opdracht C
+            layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
+            layers.MaxPooling2D(pool_size=(2, 2)),
+            layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
+            layers.MaxPooling2D(pool_size=(2, 2)),
+            layers.Conv2D(20, kernel_size=(3, 3), padding="same"),
+            layers.MaxPooling2D(pool_size=(2, 2)),
+            layers.Conv2D(num_classes, kernel_size=(3, 3)),
         ]
     )
     return model
